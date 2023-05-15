@@ -1,13 +1,43 @@
-body {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+
+* {
+  padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html,
+body,
+.App,
+#root {
+  height: 100%;
+}
+
+.trello-signup {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(250, 251, 252);
+  background-image: url(https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.438/static/media/trello-left.7317ad1f.svg),
+    url(https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.438/static/media/trello-right.16b9c9bb.svg);
+  background-repeat: no-repeat, no-repeat;
+  background-attachment: fixed, fixed;
+  background-size: 368px, 368px;
+  background-position: left bottom, right bottom;
+}
+
+@media (max-width: 768px) {
+  .trello-signup {
+    all: unset;
+    background-color: #fff;
+    display: block;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+  }
 }
