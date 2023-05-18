@@ -1,18 +1,32 @@
-import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import SignUp from './pages/SignUp';
-import { ROUTES } from './utils/constants/routes';
+import React, { useEffect } from "react";
+import {
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+import Auth from "./pages/Auth";
+import Boards from "./pages/Boards";
 
-const App = () =>  {
+import { ROUTES } from "./utils/constants/routes";
+
+const App = () => {
+  const navigate = useNavigate()
+  const location = useLocation();
+
+  useEffect(() => {
+    if(location.pathname === '/') navigate(ROUTES.BOARDS)
+  }, [location, navigate]);
+
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path={ROUTES.SIGNUP} element={<SignUp />} />
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route path={ROUTES.SIGNUP} element={<Auth />} />
+        <Route path={ROUTES.LOGIN} element={<Auth type={"login"} />} />
+        <Route path={ROUTES.BOARDS} element={<Boards />} />
+      </Routes>
     </div>
   );
-}
+};
 
 export default App;
