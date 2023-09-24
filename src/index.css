@@ -43,6 +43,26 @@ body,
   background-position: top right;
 }
 
+.selectedBg {
+  position: relative;
+}
+
+.selectedBg::after {
+  position: absolute;
+  color: #fff;
+  font-size: 13px;
+  display: grid;
+  place-items: center;
+  content: "✓";
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.166);
+  top: 0;
+  left: 0;
+}
+
+
+
 @media (max-width: 768px) {
   .trello-auth {
     all: unset;

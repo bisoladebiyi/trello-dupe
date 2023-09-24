@@ -1,12 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
-import { QueryDocumentSnapshot, DocumentData } from "firebase/firestore";
+import { IWorkspace } from "../../utils/interfaces/interfaces";
+import { db } from "../../firebase";
+import {
+  collection,
+  onSnapshot,
+  query,
+  QueryDocumentSnapshot,
+  DocumentData,
+} from "firebase/firestore";
 
-interface IWorkspace {
-  workspace: QueryDocumentSnapshot<DocumentData, DocumentData>;
-}
+const Workspace: React.FC<IWorkspace> = ({
+  workspace,
+  toggleBoardModal,
+  setWorkspaceID,
+}) => {
+  const [boards, setBoards] = useState<
+    QueryDocumentSnapshot<DocumentData, DocumentData>[] | []
+  >([]);
 
-const Workspace: React.FC<IWorkspace> = ({ workspace }) => {
+  useEffect(() => {
+    onSnapshot(
+      query(collection(db, "workspaces", workspace.id, "boards")),
+      (snapshot) => {
+        setBoards(snapshot.docs);
+      }
+    );
+  }, []);
+
+  const newBoard = () => {
+    toggleBoardModal();
+    setWorkspaceID(workspace.id);
+  };
+
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -26,7 +52,18 @@ const Workspace: React.FC<IWorkspace> = ({ workspace }) => {
       </div>
 
       <div className="grid grid-cols-4 gap-3 mt-5">
-        <button className="h-28 text-sm bg-gray-100 rounded">
+        {boards?.map((b) => (
+          <button
+            key={b.id}
+            className="h-28 text-white font-semibold text-left pl-3 pt-3 rounded text-base flex items-start capitalize"
+            style={{
+              background: `url(${b.data().bg}) 0% 0% / cover no-repeat`,
+            }}
+          >
+            {b.data().name}
+          </button>
+        ))}
+        <button className="h-28 text-sm bg-gray-100 rounded" onClick={newBoard}>
           Create new board
         </button>
       </div>

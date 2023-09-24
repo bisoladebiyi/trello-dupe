@@ -11,7 +11,7 @@ const Layout = ({children}: any) => {
     }
   return (
     <div className='h-full'>
-        <Navbar toggleWorkspaceModal={toggleWorkspaceModal} />
+        {/* <Navbar toggleWorkspaceModal={toggleWorkspaceModal} /> */}
         {children}
         {showNewWorkspaceModal &&  <NewWorkspaceModal toggleWorkspaceModal={toggleWorkspaceModal} workspaceName={workspaceName} setWorkspaceName={setWorkspaceName}  />}
        
