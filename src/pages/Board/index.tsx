@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Navbar from "../../components/Navbar";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import BoardList from "../../components/BoardList";
 import Button from "../../components/Elements/Button";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import Layout from "../../components/Layout";
 
 const Board: React.FC = () => {
   const [showInput, setShowInput] = useState<boolean>(false);
@@ -13,8 +13,7 @@ const Board: React.FC = () => {
   };
 
   return (
-    <div className="h-full">
-      <Navbar />
+    <Layout>
       <main className="bg-red-200 h-full pt-10">
         <div className="py-4 px-6 bg-white bg-opacity-20 text-dark text-lg font-bold mt-1">
           My board
@@ -52,7 +51,7 @@ const Board: React.FC = () => {
           </div>
         </div>
       </main>
-    </div>
+    </Layout>
   );
 };
 
