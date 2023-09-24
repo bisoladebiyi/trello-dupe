@@ -13,18 +13,18 @@ const SideBar: React.FC<IProps> = ({ active }) => {
         {SideBarItems.map((s) => (
           <li
             key={s.name}
-            className={`capitalize text-dark font-medium flex space-x-3 items-center p-2 rounded-md ${
+            className={`capitalize font-medium flex space-x-3 items-center p-2 rounded-md ${
               active.toLowerCase() === s.name.toLowerCase()
                 ? "text-[#0D66E4] bg-[#E9F2FF]"
-                : ""
+                : "text-dark"
             }`}
           >
             <s.icon
               fontSize="small"
-              className={`text-gray-500 ${
+              className={`${
                 active.toLowerCase() === s.name.toLowerCase()
                   ? "text-[#0D66E4]"
-                  : ""
+                  : "text-gray-500"
               }`}
             />{" "}
             <span>{s.name}</span>

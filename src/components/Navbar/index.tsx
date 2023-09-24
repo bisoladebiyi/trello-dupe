@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import { Avatar } from "@mui/material";
+import { logOut } from "../../utils/requests/requests_firebase";
 
 const navItems: string[] = ["Workspaces", "Recent", "Starred", "Templates"];
 
 const Navbar = () => {
+  const [showLogoutBtn, setShowLogoutBtn] = useState<boolean>(false);
+
   return (
     <nav className="bg-[#026AA7] py-1.5 px-6 flex items-center justify-between fixed w-full">
       <div className="flex items-center">
@@ -32,7 +35,7 @@ const Navbar = () => {
           </button>
         </ul>
       </div>
-      <div className="flex items-center space-x-3">
+      <div className="flex items-center space-x-3 relative">
         <input
           placeholder="Search boards"
           className="rounded-md border-0 outline-none bg-white bg-opacity-20 focus:bg-opacity-30 placeholder:text-white py-1 px-3 text-white text-sm"
@@ -41,7 +44,20 @@ const Navbar = () => {
           <span className="w-1/2 h-5"></span>
           <span className="w-1/2 h-5 bg-white"></span>
         </button>
-        <Avatar sx={{ width: 30, height: 30 }} />
+        <button onClick={() => setShowLogoutBtn(!showLogoutBtn)}>
+          <Avatar
+            sx={{ width: 30, height: 30 }}
+            src={localStorage.getItem("avatar") || ""}
+          />
+        </button>
+        {showLogoutBtn && (
+          <button
+            className="bg-white p-3 rounded-sm text-center text-sm text-dark right-0 top-full absolute shadow"
+            onClick={logOut}
+          >
+            Logout
+          </button>
+        )}
       </div>
     </nav>
   );
