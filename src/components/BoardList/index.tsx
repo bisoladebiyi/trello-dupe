@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import Button from "../Elements/Button";
+import { IBoardList } from "../../utils/interfaces/interfaces";
 
-const BoardList: React.FC = () => {
+const BoardList: React.FC<IBoardList> = ({ list }) => {
   const [showInput, setShowInput] = useState<boolean>(false);
 
   const toggleInput = () => {
@@ -12,7 +13,7 @@ const BoardList: React.FC = () => {
 
   return (
     <div className="min-w-[300px] bg-[#F1F2F4] rounded-2xl shadow py-4 px-5">
-      <h3 className="font-medium text-sm">To Do</h3>
+      <h3 className="font-medium text-sm">{list.data().name}</h3>
       <div className="mt-3 space-y-3">
         <div className="p-3 bg-white rounded-lg shadow text-sm text-dark -mx-2 hover:bg-[#F1F2F4] cursor-pointer">
           <p>Create landing page</p>

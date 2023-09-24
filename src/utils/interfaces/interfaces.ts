@@ -43,3 +43,7 @@ export interface IWorkspace extends Omit<INavbar, "toggleWorkspaceModal"> {
 export interface IBoards extends Omit<INavbar, "toggleWorkspaceModal"> {
     setWorkspaceID: React.Dispatch<React.SetStateAction<string>>
 }
+
+export interface IBoardList {
+    list: QueryDocumentSnapshot<DocumentData, DocumentData>
+}
