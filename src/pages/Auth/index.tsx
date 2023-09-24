@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Button from "../../components/Elements/Button";
 import { ROUTES } from "../../utils/constants/routes";
 import { IAuth } from "../../utils/interfaces/interfaces";
@@ -14,7 +14,6 @@ const Auth: React.FC<IAuth> = ({ type }) => {
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
 
-  const navigate = useNavigate();
 
   const changeValues = (e: React.FormEvent<HTMLInputElement>) => {
     if (e.currentTarget.name === "email") {

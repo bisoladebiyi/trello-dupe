@@ -30,6 +30,19 @@ body,
   background-position: left bottom, right bottom;
 }
 
+.modal-container {
+  box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.663);
+  z-index: 9000;
+  height: 70%;
+}
+
+.modal-art {
+  background: url("https://trello.com/assets/df0d81969c6394b61c0d.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top right;
+}
+
 @media (max-width: 768px) {
   .trello-auth {
     all: unset;

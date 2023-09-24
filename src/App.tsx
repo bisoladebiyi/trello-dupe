@@ -5,8 +5,8 @@ import Board from "./pages/Board";
 import Boards from "./pages/Boards";
 import { onAuthStateChanged } from "@firebase/auth";
 import { auth } from "./firebase";
-
 import { ROUTES } from "./utils/constants/routes";
+import WorkspacesContext from "./context/WorkspacesContext";
 
 const App = () => {
   const navigate = useNavigate();
@@ -28,14 +28,16 @@ const App = () => {
   }, []);
 
   return (
-    <div className="App h-full">
-      <Routes>
-        <Route path={ROUTES.SIGNUP} element={<Auth />} />
-        <Route path={ROUTES.LOGIN} element={<Auth type={"login"} />} />
-        <Route path={ROUTES.BOARDS} element={<Boards />} />
-        <Route path={ROUTES.BOARD + "/:id"} element={<Board />} />
-      </Routes>
-    </div>
+    <WorkspacesContext>
+      <div className="App h-full">
+        <Routes>
+          <Route path={ROUTES.SIGNUP} element={<Auth />} />
+          <Route path={ROUTES.LOGIN} element={<Auth type={"login"} />} />
+          <Route path={ROUTES.BOARDS} element={<Boards />} />
+          <Route path={ROUTES.BOARD + "/:id"} element={<Board />} />
+        </Routes>
+      </div>
+    </WorkspacesContext>
   );
 };
 

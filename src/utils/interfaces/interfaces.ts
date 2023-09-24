@@ -16,3 +16,12 @@ export interface IDashboardLayout {
     active: string,
     children: React.ReactNode
 }
+
+export interface INavbar {
+    toggleWorkspaceModal: () => void
+}
+
+export interface INewWorkspaceModal extends INavbar {
+    workspaceName: string;
+    setWorkspaceName: React.Dispatch<React.SetStateAction<string>>
+}
