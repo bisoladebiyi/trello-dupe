@@ -6,7 +6,7 @@ const navItems: string[] = ["Workspaces", "Recent", "Starred", "Templates"];
 
 const Navbar = () => {
   return (
-    <nav className="bg-[#026AA7] py-1.5 px-6 flex items-center justify-between">
+    <nav className="bg-[#026AA7] py-1.5 px-6 flex items-center justify-between fixed w-full">
       <div className="flex items-center">
         <div className="flex items-center space-x-2">
           <figure>
