@@ -3,6 +3,8 @@ import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import { Avatar } from "@mui/material";
 import { logOut } from "../../utils/requests/requests_firebase";
 import { INavbar } from "../../utils/interfaces/interfaces";
+import { Link } from "react-router-dom";
+import { ROUTES } from "../../utils/constants/routes";
 
 const navItems: string[] = ["Workspaces", "Recent", "Starred", "Templates"];
 
@@ -26,16 +28,19 @@ const Navbar: React.FC<INavbar> = ({
   return (
     <nav className="bg-[#026AA7] py-1.5 px-6 flex items-center justify-between fixed w-full">
       <div className="flex items-center">
-        <div className="flex items-center space-x-2">
-          <figure>
-            <img
-              className="w-4"
-              src="https://www.pngkey.com/png/full/213-2134177_import-boards-from-trello-trello-logo-white.png"
-              alt=""
-            />
-          </figure>
-          <p className="font-bold text-xl text-white">Trello</p>
-        </div>
+        <Link to={ROUTES.BOARDS}>
+          <div className="flex items-center space-x-2">
+            <figure>
+              <img
+                className="w-4"
+                src="https://www.pngkey.com/png/full/213-2134177_import-boards-from-trello-trello-logo-white.png"
+                alt=""
+              />
+            </figure>
+            <p className="font-bold text-xl text-white">Trello</p>
+          </div>
+        </Link>
+
         <ul className="flex text-white items-center space-x-6 ml-6 text-sm font-normal relative">
           {navItems.map((item) => (
             <li key={item}>

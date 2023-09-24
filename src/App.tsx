@@ -3,8 +3,8 @@ import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Auth from "./pages/Auth";
 import Board from "./pages/Board";
 import Boards from "./pages/Boards";
-import { onAuthStateChanged } from "@firebase/auth";
-import { auth } from "./firebase";
+// import { onAuthStateChanged } from "@firebase/auth";
+// import { auth } from "./firebase";
 import { ROUTES } from "./utils/constants/routes";
 import WorkspacesContext from "./context/WorkspacesContext";
 import Navbar from "./components/Navbar";
@@ -22,16 +22,21 @@ const App = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigate(ROUTES.BOARDS);
-      } else {
-        if ([ROUTES.LOGIN, ROUTES.SIGNUP].includes(location.pathname)) return;
-        navigate(ROUTES.LOGIN);
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   const isAuthRoute = [ROUTES.LOGIN, ROUTES.SIGNUP].includes(
+  //     location.pathname
+  //   );
+
+  //   onAuthStateChanged(auth, (user) => {
+  //     if (user && isAuthRoute) {
+  //       navigate(ROUTES.BOARDS);
+  //     } else if (!user && isAuthRoute) {
+  //       return;
+  //     } else {
+  //       navigate(ROUTES.LOGIN);
+  //     }
+  //   });
+  // }, []);
 
   useEffect(() => {
     if (location.pathname === "/") navigate(ROUTES.BOARDS);
@@ -48,12 +53,23 @@ const App = () => {
   return (
     <WorkspacesContext>
       <div className="App h-full">
-        <Navbar toggleWorkspaceModal={toggleWorkspaceModal} toggleBoardModal={toggleBoardModal} />
+        <Navbar
+          toggleWorkspaceModal={toggleWorkspaceModal}
+          toggleBoardModal={toggleBoardModal}
+        />
         <Routes>
           <Route path={ROUTES.SIGNUP} element={<Auth />} />
           <Route path={ROUTES.LOGIN} element={<Auth type={"login"} />} />
-          <Route path={ROUTES.BOARDS} element={<Boards toggleBoardModal={toggleBoardModal} setWorkspaceID={setWorkspaceID} />} />
-          <Route path={ROUTES.BOARD + "/:id"} element={<Board />} />
+          <Route
+            path={ROUTES.BOARDS}
+            element={
+              <Boards
+                toggleBoardModal={toggleBoardModal}
+                setWorkspaceID={setWorkspaceID}
+              />
+            }
+          />
+          <Route path={ROUTES.BOARD + "/:w_id/:b_id"} element={<Board />} />
         </Routes>
         {showNewWorkspaceModal && (
           <NewWorkspaceModal
@@ -62,7 +78,15 @@ const App = () => {
             setWorkspaceName={setWorkspaceName}
           />
         )}
-        {showNewBoardModal && <NewBoardModal boardName={boardName} workspaceID={workspaceID} setBoardName={setBoardName} setWorkspaceID={setWorkspaceID} toggleBoardModal={toggleBoardModal} />}
+        {showNewBoardModal && (
+          <NewBoardModal
+            boardName={boardName}
+            workspaceID={workspaceID}
+            setBoardName={setBoardName}
+            setWorkspaceID={setWorkspaceID}
+            toggleBoardModal={toggleBoardModal}
+          />
+        )}
       </div>
     </WorkspacesContext>
   );

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Navbar from '../Navbar'
 import NewWorkspaceModal from '../NewWorkspaceModal'
 
 const Layout = ({children}: any) => {
@@ -11,7 +10,6 @@ const Layout = ({children}: any) => {
     }
   return (
     <div className='h-full'>
-        {/* <Navbar toggleWorkspaceModal={toggleWorkspaceModal} /> */}
         {children}
         {showNewWorkspaceModal &&  <NewWorkspaceModal toggleWorkspaceModal={toggleWorkspaceModal} workspaceName={workspaceName} setWorkspaceName={setWorkspaceName}  />}
        

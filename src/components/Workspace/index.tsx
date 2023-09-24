@@ -9,6 +9,8 @@ import {
   QueryDocumentSnapshot,
   DocumentData,
 } from "firebase/firestore";
+import { Link } from "react-router-dom";
+import { ROUTES } from "../../utils/constants/routes";
 
 const Workspace: React.FC<IWorkspace> = ({
   workspace,
@@ -53,15 +55,16 @@ const Workspace: React.FC<IWorkspace> = ({
 
       <div className="grid grid-cols-4 gap-3 mt-5">
         {boards?.map((b) => (
-          <button
-            key={b.id}
-            className="h-28 text-white font-semibold text-left pl-3 pt-3 rounded text-base flex items-start capitalize"
-            style={{
-              background: `url(${b.data().bg}) 0% 0% / cover no-repeat`,
-            }}
-          >
-            {b.data().name}
-          </button>
+          <Link to={ROUTES.BOARD + `/${workspace.id}/${b.id}`} key={b.id}>
+            <button
+              className="h-28 w-full text-white font-semibold text-left pl-3 pt-3 rounded text-base flex items-start capitalize"
+              style={{
+                background: `url(${b.data().bg}) 0% 0% / cover no-repeat`,
+              }}
+            >
+              {b.data().name}
+            </button>
+          </Link>
         ))}
         <button className="h-28 text-sm bg-gray-100 rounded" onClick={newBoard}>
           Create new board
