@@ -63,9 +63,9 @@ export const createWorkspace = async (workspace: string) => {
     }
 };
 
-export const addBoards = async (id: string, board: string) => {
+export const addBoard = async (id: string, board: string, bg:string) => {
     try {
-        await addDoc(collection(db, "workpaces", id, "boards"), { name: board })
+        await addDoc(collection(db, "workspaces", id, "boards"), { name: board, bg })
     } catch (error: any) {
         alert(error.message)
     }

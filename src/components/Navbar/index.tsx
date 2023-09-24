@@ -6,13 +6,21 @@ import { INavbar } from "../../utils/interfaces/interfaces";
 
 const navItems: string[] = ["Workspaces", "Recent", "Starred", "Templates"];
 
-const Navbar: React.FC<INavbar> = ({ toggleWorkspaceModal }) => {
+const Navbar: React.FC<INavbar> = ({
+  toggleWorkspaceModal,
+  toggleBoardModal,
+}) => {
   const [showLogoutBtn, setShowLogoutBtn] = useState<boolean>(false);
   const [showCreateDropdown, setShowCreateDropdown] = useState<boolean>(false);
 
   const newWorkspace = () => {
     setShowCreateDropdown(false);
     toggleWorkspaceModal();
+  };
+
+  const newBoard = () => {
+    setShowCreateDropdown(false);
+    toggleBoardModal();
   };
 
   return (
@@ -45,7 +53,10 @@ const Navbar: React.FC<INavbar> = ({ toggleWorkspaceModal }) => {
           </button>
           {showCreateDropdown && (
             <div className="bg-white flex flex-col py-3 rounded-sm text-center text-sm text-dark right-0 top-full absolute shadow w-[250px]">
-              <button className="hover:bg-black hover:bg-opacity-10 px-5 py-2 text-left text-sm">
+              <button
+                onClick={newBoard}
+                className="hover:bg-black hover:bg-opacity-10 px-5 py-2 text-left text-sm"
+              >
                 <p>Board</p>{" "}
                 <p className="text-[11px] text-gray-500 leading-normal">
                   A board is made up of cards ordered on lists. Use it to manage
