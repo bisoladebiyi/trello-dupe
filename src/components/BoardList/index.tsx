@@ -19,7 +19,11 @@ const BoardList: React.FC<IBoardList> = ({ list }) => {
     setCardName,
     toggleInput,
     addNewCard,
-    handleDeleteList
+    handleDeleteList,
+    handleDragEnd,
+    handleDragStart,
+    handleDragEnter,
+    handleDragOver,
   } = useBoardList(list);
 
   return (
@@ -43,9 +47,17 @@ const BoardList: React.FC<IBoardList> = ({ list }) => {
       )}
       <div className="mt-3 space-y-3">
         {cards
-          ?.sort((a, b) => a.data().order - b.data().order)
-          .map((c) => (
-            <Card key={c.id} card={c} l_id={list.id} />
+          .map((c, i) => (
+            <div
+              key={c.id}
+              draggable
+              onDragStart={(e) => handleDragStart(e, i)}
+              onDragEnter={(e) => handleDragEnter(e, i)}
+              onDragEnd={(e) => handleDragEnd(e, c.id)}
+              onDragOver={handleDragOver}
+            >
+              <Card card={c} l_id={list.id} />
+            </div>
           ))}
 
         {showInput && (

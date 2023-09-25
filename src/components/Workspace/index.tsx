@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { IWorkspace } from "../../utils/interfaces/interfaces";
