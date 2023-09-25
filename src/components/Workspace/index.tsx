@@ -10,7 +10,7 @@ import {
   QueryDocumentSnapshot,
   DocumentData,
 } from "firebase/firestore";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ROUTES } from "../../utils/constants/routes";
 import { deleteWorkspace } from "../../utils/requests/requests_firebase";
 
@@ -18,10 +18,13 @@ const Workspace: React.FC<IWorkspace> = ({
   workspace,
   toggleBoardModal,
   setWorkspaceID,
+  isWorkspacePage,
 }) => {
   const [boards, setBoards] = useState<
     QueryDocumentSnapshot<DocumentData, DocumentData>[] | []
   >([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     onSnapshot(
@@ -38,6 +41,10 @@ const Workspace: React.FC<IWorkspace> = ({
   };
 
   const deleteWS = async () => {
+    if (isWorkspacePage) {
+      navigate(ROUTES.BOARDS);
+    }
+
     await deleteWorkspace(workspace.id);
     alert("Workspace deleted!");
   };

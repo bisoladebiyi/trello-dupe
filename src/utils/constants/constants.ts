@@ -7,6 +7,8 @@ export const AuthTypes = {
     login: 'login'
 }
 
+export const navItems: string[] = ["Workspaces", "Recent", "Starred", "Templates"];
+
 export const SideBarItems = [
     {
         name: "boards",
@@ -15,7 +17,7 @@ export const SideBarItems = [
     },
     {
         name: "home",
-        route: ROUTES.HOME,
+        route: ROUTES.BOARDS,
         icon: HomeRoundedIcon
     },
 ]

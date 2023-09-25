@@ -26,6 +26,14 @@ export interface IDashboardLayout {
     children: React.ReactNode
 }
 
+export interface ILayout { 
+    children: React.ReactNode
+}
+
+export interface ISideBar {
+    active: string;
+}
+
 export interface INavbar {
     toggleWorkspaceModal: () => void
     toggleBoardModal: () => void
@@ -45,11 +53,13 @@ export interface INewBoardModal extends Omit<INavbar, "toggleWorkspaceModal"> {
 
 export interface IWorkspace extends Omit<INavbar, "toggleWorkspaceModal"> {
     workspace: QueryDocumentSnapshot<DocumentData, DocumentData>;
-    setWorkspaceID: React.Dispatch<React.SetStateAction<string>>
+    setWorkspaceID: React.Dispatch<React.SetStateAction<string>>;
+    isWorkspacePage?: boolean
 }
 
 export interface IBoards extends Omit<INavbar, "toggleWorkspaceModal"> {
     setWorkspaceID: React.Dispatch<React.SetStateAction<string>>
+    toggleWorkspaceModal?: () => void
 }
 
 export interface IBoardList {

@@ -22,10 +22,11 @@ const NewBoardModal: React.FC<INewBoardModal> = ({
 
   const submit = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
+    toggleBoardModal();
 
     await addBoard(workspaceID, boardName, selectedBg);
-    toggleBoardModal();
     alert("Board created");
+    setBoardName("");
   };
 
   return (

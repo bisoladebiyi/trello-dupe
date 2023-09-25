@@ -13,7 +13,7 @@ const NewWorkspaceModal: React.FC<INewWorkspaceModal> = ({
     e.preventDefault();
 
     await createWorkspace(workspaceName);
-    setWorkspaceName("")
+    setWorkspaceName("");
     toggleWorkspaceModal();
   };
   return (
