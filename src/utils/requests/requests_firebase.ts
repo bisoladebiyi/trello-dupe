@@ -9,8 +9,8 @@ import {
     addDoc,
     collection,
     updateDoc,
-    doc
-    // deleteDoc,
+    doc,
+    deleteDoc
 } from "@firebase/firestore";
 import { auth, db } from "../../firebase";
 
@@ -115,6 +115,34 @@ export const editCardName = async (w_id: string, b_id: string, l_id: string, c_i
     }
 };
 
-//   export const leaveChannel =  (id) => {
-//     deleteDoc(doc(db, "channels", id)).then((res)=> window.location.reload());
-//   };
+export const deleteWorkspace = async (w_id: string) => {
+    try {
+        await deleteDoc(doc(db, "workspaces", w_id))
+    } catch (error: any) {
+        alert(error.message)
+    }
+};
+
+export const deleteBoard = async (w_id: string, b_id: string) => {
+    try {
+        await deleteDoc(doc(db, "workspaces", w_id, "boards", b_id))
+    } catch (error: any) {
+        alert(error.message)
+    }
+};
+
+export const deleteList = async (w_id: string, b_id: string, l_id: string) => {
+    try {
+        await deleteDoc(doc(db, "workspaces", w_id, "boards", b_id, "lists", l_id))
+    } catch (error: any) {
+        alert(error.message)
+    }
+};
+
+export const deleteCard = async (w_id: string, b_id: string, l_id: string, c_id: string) => {
+    try {
+        await deleteDoc(doc(db, "workspaces", w_id, "boards", b_id, "lists", l_id, "cards", c_id))
+    } catch (error: any) {
+        alert(error.message)
+    }
+};

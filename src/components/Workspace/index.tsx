@@ -11,6 +11,7 @@ import {
 } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../utils/constants/routes";
+import { deleteWorkspace } from "../../utils/requests/requests_firebase";
 
 const Workspace: React.FC<IWorkspace> = ({
   workspace,
@@ -35,6 +36,11 @@ const Workspace: React.FC<IWorkspace> = ({
     setWorkspaceID(workspace.id);
   };
 
+  const deleteWS = async () => {
+    await deleteWorkspace(workspace.id);
+    alert("Workspace deleted!");
+  };
+
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -47,7 +53,10 @@ const Workspace: React.FC<IWorkspace> = ({
           </span>
         </div>
         {/* delete  */}
-        <button className="text-dark hover:bg-gray-200 bg-gray-100 rounded p-2 text-sm flex space-x-1 items-center">
+        <button
+          onClick={deleteWS}
+          className="text-dark hover:bg-gray-200 bg-gray-100 rounded p-2 text-sm flex space-x-1 items-center"
+        >
           <DeleteRoundedIcon className="text-dark" fontSize="small" />{" "}
           <span>Delete</span>
         </button>

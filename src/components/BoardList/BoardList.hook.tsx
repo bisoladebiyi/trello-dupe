@@ -8,7 +8,11 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useParams } from "react-router-dom";
-import { addCard, editListName } from "../../utils/requests/requests_firebase";
+import {
+  addCard,
+  deleteList,
+  editListName,
+} from "../../utils/requests/requests_firebase";
 
 const useBoardList = (
   list: QueryDocumentSnapshot<DocumentData, DocumentData>
@@ -72,6 +76,13 @@ const useBoardList = (
     }
   };
 
+  const handleDeleteList = async () => {
+    if (params.w_id && params.b_id) {
+      await deleteList(params.w_id, params.b_id, list.id);
+    }
+    alert("List deleted!");
+  };
+
   const addNewCard = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     toggleInput();
@@ -94,6 +105,7 @@ const useBoardList = (
     setCardName,
     toggleInput,
     addNewCard,
+    handleDeleteList,
   };
 };
 

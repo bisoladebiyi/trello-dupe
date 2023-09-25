@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { ICard } from "../../utils/interfaces/interfaces";
 import Button from "../Elements/Button";
-import { editCardName } from "../../utils/requests/requests_firebase";
+import {
+  deleteCard,
+  editCardName,
+} from "../../utils/requests/requests_firebase";
 import { useParams } from "react-router-dom";
 
 const Card: React.FC<ICard> = ({ card, l_id }) => {
@@ -28,6 +31,17 @@ const Card: React.FC<ICard> = ({ card, l_id }) => {
       await editCardName(w_id, b_id, l_id, card.id, cardName);
     }
   };
+
+  const removeCard = async () => {
+    toggleUpdateModal();
+
+    if (w_id && b_id) {
+      await deleteCard(w_id, b_id, l_id, card.id);
+    }
+
+    alert("Card deleted!");
+  };
+
   return (
     <div>
       <div
@@ -59,7 +73,12 @@ const Card: React.FC<ICard> = ({ card, l_id }) => {
               className="uppercase text-xs"
               onClick={editCard}
             />
-            <Button text={"Delete"} className="text-xs uppercase" type="dark" />
+            <Button
+              text={"Delete"}
+              className="text-xs uppercase"
+              type="dark"
+              onClick={removeCard}
+            />
           </div>
         </div>
       )}

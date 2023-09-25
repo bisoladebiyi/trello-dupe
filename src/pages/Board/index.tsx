@@ -1,8 +1,9 @@
 import React from "react";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import BoardList from "../../components/BoardList";
 import Button from "../../components/Elements/Button";
-import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import Layout from "../../components/Layout";
 import useBoard from "./Board.hook";
 
@@ -20,6 +21,7 @@ const Board: React.FC = () => {
     setListName,
     toggleInput,
     submit,
+    handleDeleteBoard,
   } = useBoard();
 
   return (
@@ -30,7 +32,7 @@ const Board: React.FC = () => {
           background: `url(${board?.data().bg}) 0% 0% / cover no-repeat`,
         }}
       >
-        <div className="py-4 px-6 bg-white bg-opacity-20 text-dark text-lg font-bold mt-1 capitalize">
+        <div className="py-4 px-6 flex items-center justify-between bg-white bg-opacity-30 shadow text-dark text-lg font-bold mt-2 capitalize">
           {!showBoardNameInput ? (
             <p onClick={toggleBoardNameInput}>{board?.data().name}</p>
           ) : (
@@ -43,11 +45,22 @@ const Board: React.FC = () => {
               className="p-2 py-1 rounded border-[1.5px] border-[#DFE1E6] focus:border-[#4C9AFF] transition-colors outline-none"
             />
           )}
+          {/* delete  */}
+          <button
+            onClick={handleDeleteBoard}
+            className="text-dark hover:bg-gray-200 bg-gray-100 bg-opacity-90 rounded p-2 text-xs flex space-x-1 items-center"
+          >
+            <DeleteRoundedIcon
+              className="text-dark scale-[.9]"
+              fontSize="small"
+            />{" "}
+            <span>Delete</span>
+          </button>
         </div>
         <div className="overflow-x-scroll">
           <div className="px-6 py-4 flex items-start gap-5 overflow-auto whitespace-nowrap list-wrapper">
             {lists
-              .sort((a, b) => a.data().order - b.data().order)
+              ?.sort((a, b) => a.data().order - b.data().order)
               .map((list) => (
                 <BoardList list={list} key={list.id} />
               ))}

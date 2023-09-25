@@ -5,6 +5,7 @@ import { logOut } from "../../utils/requests/requests_firebase";
 import { INavbar } from "../../utils/interfaces/interfaces";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../utils/constants/routes";
+import Button from "../Elements/Button";
 
 const navItems: string[] = ["Workspaces", "Recent", "Starred", "Templates"];
 
@@ -26,22 +27,22 @@ const Navbar: React.FC<INavbar> = ({
   };
 
   return (
-    <nav className="bg-[#026AA7] py-1.5 px-6 flex items-center justify-between fixed w-full">
+    <nav className="bg-white bg-opacity-70 shadow py-1.5 px-6 flex items-center justify-between fixed w-full">
       <div className="flex items-center">
         <Link to={ROUTES.BOARDS}>
           <div className="flex items-center space-x-2">
             <figure>
               <img
-                className="w-4"
-                src="https://www.pngkey.com/png/full/213-2134177_import-boards-from-trello-trello-logo-white.png"
-                alt=""
+                className="w-4 h-4"
+                src="https://cdn.icon-icons.com/icons2/2622/PNG/512/brand_trello_icon_158659.png"
+                alt="logo"
               />
             </figure>
-            <p className="font-bold text-xl text-white">Trello</p>
+            <p className="font-bold text-xl text-dark">Trello</p>
           </div>
         </Link>
 
-        <ul className="flex text-white items-center space-x-6 ml-6 text-sm font-normal relative">
+        <ul className="flex text-dark items-center space-x-6 ml-6 text-sm font-normal relative">
           {navItems.map((item) => (
             <li key={item}>
               <button className="flex items-center space-x-1">
@@ -50,12 +51,11 @@ const Navbar: React.FC<INavbar> = ({
               </button>
             </li>
           ))}
-          <button
-            className="capitalize text-white bg-black bg-opacity-30 px-3 py-2 text-sm rounded ml-5 hover:bg-white hover:bg-opacity-20 transition-colors"
+          <Button
+            text="Create"
             onClick={() => setShowCreateDropdown(!showCreateDropdown)}
-          >
-            create
-          </button>
+            className={"hover:bg-opacity-95"}
+          />
           {showCreateDropdown && (
             <div className="bg-white flex flex-col py-3 rounded-sm text-center text-sm text-dark right-0 top-full absolute shadow w-[250px]">
               <button
@@ -83,13 +83,9 @@ const Navbar: React.FC<INavbar> = ({
         </ul>
       </div>
       <div className="flex items-center space-x-3 relative">
-        <input
-          placeholder="Search boards"
-          className="rounded-md border-0 outline-none bg-white bg-opacity-20 focus:bg-opacity-30 placeholder:text-white py-1 px-3 text-white text-sm"
-        />
-        <button className="overflow-hidden w-5 h-5 rounded-full border-2 flex border-white">
+        <button className="overflow-hidden w-5 h-5 rounded-full border-2 flex border-dark">
           <span className="w-1/2 h-5"></span>
-          <span className="w-1/2 h-5 bg-white"></span>
+          <span className="w-1/2 h-5 bg-dark"></span>
         </button>
         <button onClick={() => setShowLogoutBtn(!showLogoutBtn)}>
           <Avatar
