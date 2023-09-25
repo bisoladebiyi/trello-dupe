@@ -67,9 +67,9 @@ export const createWorkspace = async (workspace: string) => {
 export const addBoard = async (id: string, board: string, bg: string) => {
     try {
         const res = await addDoc(collection(db, "workspaces", id, "boards"), { name: board, bg })
-        await addList(id, res.id, "To do", 1)
-        await addList(id, res.id, "In progress", 2)
-        await addList(id, res.id, "Done", 3)
+        await addList(id, res.id, "To do", 5)
+        await addList(id, res.id, "In progress", 10)
+        await addList(id, res.id, "Done", 15)
     } catch (error: any) {
         alert(error.message)
     }
@@ -110,6 +110,22 @@ export const editListName = async (w_id: string, b_id: string, l_id: string, nam
 export const editCardName = async (w_id: string, b_id: string, l_id: string, c_id: string, name: string) => {
     try {
         await updateDoc(doc(db, "workspaces", w_id, "boards", b_id, "lists", l_id, "cards", c_id), { name })
+    } catch (error: any) {
+        alert(error.message)
+    }
+};
+
+export const editListOrder = async (w_id: string, b_id: string, l_id: string, order: number) => {
+    try {
+        await updateDoc(doc(db, "workspaces", w_id, "boards", b_id, "lists", l_id), { order })
+    } catch (error: any) {
+        alert(error.message)
+    }
+};
+
+export const editCardOrder = async (w_id: string, b_id: string, l_id: string, c_id: string, order: number) => {
+    try {
+        await updateDoc(doc(db, "workspaces", w_id, "boards", b_id, "lists", l_id, "cards", c_id), { order })
     } catch (error: any) {
         alert(error.message)
     }

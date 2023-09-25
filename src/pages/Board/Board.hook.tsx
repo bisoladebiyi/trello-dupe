@@ -12,8 +12,10 @@ import {
   addList,
   deleteBoard,
   editBoardName,
+  editListOrder,
 } from "../../utils/requests/requests_firebase";
 import { ROUTES } from "../../utils/constants/routes";
+import { randomNumberFromInterval } from "../../utils/helpers/helpers";
 
 const useBoard = () => {
   const [showBoardNameInput, setShowBoardNameInput] = useState<boolean>(false);
@@ -27,6 +29,9 @@ const useBoard = () => {
   const [lists, setLists] = useState<
     QueryDocumentSnapshot<DocumentData, DocumentData>[] | []
   >([]);
+  const [dragItemIndex, setDragItemIndex] = useState<any>();
+  const [dragOverItemIndex, setDragOverItemIndex] = useState<any>();
+
   const params = useParams();
   const navigate = useNavigate();
 
@@ -54,7 +59,9 @@ const useBoard = () => {
           )
         ),
         (snapshot) => {
-          setLists(snapshot.docs);
+          setLists(
+            snapshot.docs.sort((a, b) => a.data().order - b.data().order)
+          );
         }
       );
     }
@@ -95,12 +102,59 @@ const useBoard = () => {
 
   const submit = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    let order = lists.length + 1;
+    let order = lists[lists.length - 1]?.data().order + 5;
 
     toggleInput();
 
     if (params.w_id && params.b_id) {
       await addList(params.w_id, params.b_id, listName, order);
+    }
+  };
+
+  // drag and drop logic
+  const handleDragStart = (
+    e: React.DragEvent<HTMLDivElement>,
+    index: number
+  ) => {
+    setDragItemIndex(index);
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
+
+  const handleDragEnter = (
+    e: React.DragEvent<HTMLDivElement>,
+    index: number
+  ) => {
+    setDragOverItemIndex(index);
+  };
+
+  const handleDragEnd = (e: React.DragEvent<HTMLDivElement>, l_id: string) => {
+    const _lists = [...lists];
+    const dragItem = _lists.splice(dragItemIndex, 1)[0];
+    _lists.splice(dragOverItemIndex, 0, dragItem);
+    setLists(_lists);
+    setDragItemIndex(null);
+    setDragOverItemIndex(null);
+
+    let order;
+    if (dragOverItemIndex === 0) {
+      order = randomNumberFromInterval(0, lists[dragOverItemIndex].data().order);
+    } else if (dragOverItemIndex === lists.length - 1) {
+      order = randomNumberFromInterval(
+        lists[dragOverItemIndex].data().order,
+        lists[dragOverItemIndex].data().order + 5
+      );
+    } else {
+      order = randomNumberFromInterval(
+        lists[dragOverItemIndex - 1]?.data().order,
+        lists[dragOverItemIndex].data().order
+      );
+    }
+
+    if (params.w_id && params.b_id) {
+      editListOrder(params.w_id, params.b_id, l_id, order);
     }
   };
 
@@ -118,6 +172,11 @@ const useBoard = () => {
     toggleInput,
     submit,
     handleDeleteBoard,
+    setLists,
+    handleDragEnd,
+    handleDragStart,
+    handleDragEnter,
+    handleDragOver,
   };
 };
 

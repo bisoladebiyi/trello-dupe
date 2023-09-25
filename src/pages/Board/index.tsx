@@ -22,6 +22,10 @@ const Board: React.FC = () => {
     toggleInput,
     submit,
     handleDeleteBoard,
+    handleDragEnd,
+    handleDragStart,
+    handleDragEnter,
+    handleDragOver,
   } = useBoard();
 
   return (
@@ -59,12 +63,18 @@ const Board: React.FC = () => {
         </div>
         <div className="overflow-x-scroll">
           <div className="px-6 py-4 flex items-start gap-5 overflow-auto whitespace-nowrap list-wrapper">
-            {lists
-              ?.sort((a, b) => a.data().order - b.data().order)
-              .map((list) => (
-                <BoardList list={list} key={list.id} />
-              ))}
-
+            {lists.map((list, i) => (
+              <div
+                key={list.id}
+                draggable
+                onDragStart={(e) => handleDragStart(e, i)}
+                onDragEnter={(e) => handleDragEnter(e, i)}
+                onDragEnd={(e) => handleDragEnd(e, list.id)}
+                onDragOver={handleDragOver}
+              >
+                <BoardList list={list} />
+              </div>
+            ))}
             {showInput && (
               <form
                 action=""
