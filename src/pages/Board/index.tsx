@@ -12,6 +12,11 @@ const Board: React.FC = () => {
     listName,
     board,
     lists,
+    showBoardNameInput,
+    boardName,
+    toggleBoardNameInput,
+    handleBoardName,
+    handleEditBoardName,
     setListName,
     toggleInput,
     submit,
@@ -26,7 +31,18 @@ const Board: React.FC = () => {
         }}
       >
         <div className="py-4 px-6 bg-white bg-opacity-20 text-dark text-lg font-bold mt-1 capitalize">
-          {board?.data().name}
+          {!showBoardNameInput ? (
+            <p onClick={toggleBoardNameInput}>{board?.data().name}</p>
+          ) : (
+            <input
+              type="text"
+              value={boardName}
+              onChange={handleBoardName}
+              onBlur={handleEditBoardName}
+              autoFocus
+              className="p-2 py-1 rounded border-[1.5px] border-[#DFE1E6] focus:border-[#4C9AFF] transition-colors outline-none"
+            />
+          )}
         </div>
         <div className="overflow-x-scroll">
           <div className="px-6 py-4 flex items-start gap-5 overflow-auto whitespace-nowrap list-wrapper">

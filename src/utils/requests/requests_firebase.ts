@@ -8,8 +8,9 @@ import {
 import {
     addDoc,
     collection,
+    updateDoc,
+    doc
     // deleteDoc,
-    // doc
 } from "@firebase/firestore";
 import { auth, db } from "../../firebase";
 
@@ -56,25 +57,25 @@ export const logOut = async () => {
 
 export const createWorkspace = async (workspace: string) => {
     try {
-       const res = await addDoc(collection(db, "workspaces"), { name: workspace, user_id: auth.currentUser?.uid })
-       console.log(res)
+        const res = await addDoc(collection(db, "workspaces"), { name: workspace, user_id: auth.currentUser?.uid })
+        console.log(res)
     } catch (error: any) {
         alert(error.message)
     }
 };
 
-export const addBoard = async (id: string, board: string, bg:string) => {
+export const addBoard = async (id: string, board: string, bg: string) => {
     try {
         const res = await addDoc(collection(db, "workspaces", id, "boards"), { name: board, bg })
-        await addList(id, res.id, "To do", 1 )
-        await addList(id, res.id, "In progress", 2 )
-        await addList(id, res.id, "Done", 3 )
+        await addList(id, res.id, "To do", 1)
+        await addList(id, res.id, "In progress", 2)
+        await addList(id, res.id, "Done", 3)
     } catch (error: any) {
         alert(error.message)
     }
 };
 
-export const addList = async (w_id: string, b_id:string, name:string, order:number) => {
+export const addList = async (w_id: string, b_id: string, name: string, order: number) => {
     try {
         await addDoc(collection(db, "workspaces", w_id, "boards", b_id, "lists"), { name, order })
     } catch (error: any) {
@@ -82,9 +83,33 @@ export const addList = async (w_id: string, b_id:string, name:string, order:numb
     }
 };
 
-export const addCard = async (w_id: string, b_id:string, l_id: string, name:string, order:number,) => {
+export const addCard = async (w_id: string, b_id: string, l_id: string, name: string, order: number,) => {
     try {
         await addDoc(collection(db, "workspaces", w_id, "boards", b_id, "lists", l_id, "cards"), { name, order })
+    } catch (error: any) {
+        alert(error.message)
+    }
+};
+
+export const editBoardName = async (w_id: string, b_id: string, name: string) => {
+    try {
+        await updateDoc(doc(db, "workspaces", w_id, "boards", b_id), { name })
+    } catch (error: any) {
+        alert(error.message)
+    }
+};
+
+export const editListName = async (w_id: string, b_id: string, l_id: string, name: string) => {
+    try {
+        await updateDoc(doc(db, "workspaces", w_id, "boards", b_id, "lists", l_id), { name })
+    } catch (error: any) {
+        alert(error.message)
+    }
+};
+
+export const editCardName = async (w_id: string, b_id: string, l_id: string, c_id: string, name: string) => {
+    try {
+        await updateDoc(doc(db, "workspaces", w_id, "boards", b_id, "lists", l_id, "cards", c_id), { name })
     } catch (error: any) {
         alert(error.message)
     }

@@ -36,6 +36,11 @@ body,
   height: 70%;
 }
 
+.modal {
+  box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.363);
+  z-index: 9000;
+}
+
 .modal-art {
   background: url("https://trello.com/assets/df0d81969c6394b61c0d.svg");
   background-size: cover;

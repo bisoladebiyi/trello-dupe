@@ -8,9 +8,11 @@ import {
   DocumentData,
 } from "firebase/firestore";
 import { db } from "../../firebase";
-import { addList } from "../../utils/requests/requests_firebase";
+import { addList, editBoardName } from "../../utils/requests/requests_firebase";
 
 const useBoard = () => {
+  const [showBoardNameInput, setShowBoardNameInput] = useState<boolean>(false);
+  const [boardName, setBoardName] = useState<string>("");
   const [showInput, setShowInput] = useState<boolean>(false);
   const [listName, setListName] = useState<string>("");
   const [board, setBoard] = useState<QueryDocumentSnapshot<
@@ -28,6 +30,9 @@ const useBoard = () => {
         query(collection(db, "workspaces", params.w_id, "boards")),
         (snapshot) => {
           setBoard(snapshot.docs.filter((s) => s.id === params.b_id)[0]);
+          setBoardName(
+            snapshot.docs.filter((s) => s.id === params.b_id)[0].data().name
+          );
         }
       );
 
@@ -46,12 +51,32 @@ const useBoard = () => {
           setLists(snapshot.docs);
         }
       );
-
     }
   }, [params]);
 
   const toggleInput = () => {
     setShowInput(!showInput);
+  };
+
+  const toggleBoardNameInput = () => {
+    setShowBoardNameInput(!showBoardNameInput);
+  };
+
+  const handleBoardName = (e: React.FormEvent<HTMLInputElement>) => {
+    setBoardName(e.currentTarget.value);
+  };
+
+  const handleEditBoardName = async () => {
+    toggleBoardNameInput();
+
+    if (boardName.trim() === "") {
+      setBoardName(board?.data().name);
+      return;
+    }
+
+    if (params.w_id && params.b_id) {
+      await editBoardName(params.w_id, params.b_id, boardName);
+    }
   };
 
   const submit = async (e: React.MouseEvent<HTMLElement>) => {
@@ -70,6 +95,11 @@ const useBoard = () => {
     listName,
     board,
     lists,
+    showBoardNameInput,
+    boardName,
+    toggleBoardNameInput,
+    handleBoardName,
+    handleEditBoardName,
     setListName,
     toggleInput,
     submit,
