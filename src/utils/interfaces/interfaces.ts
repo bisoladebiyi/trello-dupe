@@ -13,6 +13,14 @@ export interface IAuth {
     type?: 'signup' | 'login'
 }
 
+export interface IButton {
+    text: string;
+    className?: string;
+    onClick?: (e: React.MouseEvent<HTMLElement>, method?: string) => void;
+    disabled?: boolean;
+    type?: "primary" | "dark"
+}
+
 export interface IDashboardLayout {
     active: string,
     children: React.ReactNode
@@ -46,4 +54,9 @@ export interface IBoards extends Omit<INavbar, "toggleWorkspaceModal"> {
 
 export interface IBoardList {
     list: QueryDocumentSnapshot<DocumentData, DocumentData>
+}
+
+export interface ICard {
+    card: QueryDocumentSnapshot<DocumentData, DocumentData>
+    l_id: string
 }

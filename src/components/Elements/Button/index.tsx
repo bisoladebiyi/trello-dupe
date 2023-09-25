@@ -1,16 +1,10 @@
 import React from "react";
+import { IButton } from "../../../utils/interfaces/interfaces";
 
-interface IButton {
-  text: string;
-  className?: string;
-  onClick?: (e: React.MouseEvent<HTMLElement>, method?: string) => void;
-  disabled?: boolean
-}
-
-const Button: React.FC<IButton> = ({ text, className, onClick, disabled }) => {
+const Button: React.FC<IButton> = ({ text, className, onClick, disabled, type }) => {
   return (
     <button
-      className={`p-2 rounded text-white font-medium ${className} ${disabled ? "cursor-not-allowed bg-gray-300" : "bg-primary"}`}
+      className={`p-2 rounded font-medium ${className} ${disabled ? "cursor-not-allowed text-white bg-gray-300" : type ? "bg-gray-300 text-dark" : "text-white bg-primary"}`}
       onClick={onClick}
       disabled={disabled}
     >

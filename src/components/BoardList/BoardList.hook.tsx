@@ -8,9 +8,13 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useParams } from "react-router-dom";
-import { addCard } from "../../utils/requests/requests_firebase";
+import { addCard, editListName } from "../../utils/requests/requests_firebase";
 
-const useBoardList = (list:QueryDocumentSnapshot<DocumentData, DocumentData>) => {
+const useBoardList = (
+  list: QueryDocumentSnapshot<DocumentData, DocumentData>
+) => {
+  const [showListNameInput, setShowListNameInput] = useState<boolean>(false);
+  const [listName, setListName] = useState<string>("");
   const [showInput, setShowInput] = useState<boolean>(false);
   const [cardName, setCardName] = useState<string>("");
   const [cards, setCards] = useState<
@@ -20,6 +24,8 @@ const useBoardList = (list:QueryDocumentSnapshot<DocumentData, DocumentData>) =>
   const params = useParams();
 
   useEffect(() => {
+    setListName(list.data().name);
+
     if (params.w_id && params.b_id) {
       onSnapshot(
         query(
@@ -45,6 +51,27 @@ const useBoardList = (list:QueryDocumentSnapshot<DocumentData, DocumentData>) =>
     setShowInput(!showInput);
   };
 
+  const toggleListNameInput = () => {
+    setShowListNameInput(!showListNameInput);
+  };
+
+  const handleListName = (e: React.FormEvent<HTMLInputElement>) => {
+    setListName(e.currentTarget.value);
+  };
+
+  const handleEditListName = async () => {
+    toggleListNameInput();
+
+    if (listName.trim() === "") {
+      setListName(list.data().name);
+      return;
+    }
+
+    if (params.w_id && params.b_id) {
+      await editListName(params.w_id, params.b_id, list.id, listName);
+    }
+  };
+
   const addNewCard = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     toggleInput();
@@ -55,7 +82,19 @@ const useBoardList = (list:QueryDocumentSnapshot<DocumentData, DocumentData>) =>
     }
     setCardName("");
   };
-  return { cards, cardName, showInput, setCardName, toggleInput, addNewCard };
+  return {
+    cards,
+    cardName,
+    showInput,
+    listName,
+    showListNameInput,
+    toggleListNameInput,
+    handleEditListName,
+    handleListName,
+    setCardName,
+    toggleInput,
+    addNewCard,
+  };
 };
 
 export default useBoardList;
