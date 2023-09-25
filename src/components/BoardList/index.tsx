@@ -19,10 +19,14 @@ const BoardList: React.FC<IBoardList> = ({ list }) => {
     setCardName,
     toggleInput,
     addNewCard,
+    handleDeleteList
   } = useBoardList(list);
 
   return (
-    <div className="min-w-[300px] bg-[#F1F2F4] rounded-2xl shadow py-4 px-5">
+    <div className="min-w-[300px] bg-[#F1F2F4] rounded-2xl shadow py-4 px-5 relative">
+      <button className="absolute right-5 top-3" onClick={handleDeleteList}>
+        <CloseRoundedIcon fontSize="small" className="text-gray-500" />
+      </button>
       {showListNameInput ? (
         <input
           type="text"

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   collection,
   onSnapshot,
@@ -8,7 +8,12 @@ import {
   DocumentData,
 } from "firebase/firestore";
 import { db } from "../../firebase";
-import { addList, editBoardName } from "../../utils/requests/requests_firebase";
+import {
+  addList,
+  deleteBoard,
+  editBoardName,
+} from "../../utils/requests/requests_firebase";
+import { ROUTES } from "../../utils/constants/routes";
 
 const useBoard = () => {
   const [showBoardNameInput, setShowBoardNameInput] = useState<boolean>(false);
@@ -23,6 +28,7 @@ const useBoard = () => {
     QueryDocumentSnapshot<DocumentData, DocumentData>[] | []
   >([]);
   const params = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (params.w_id && params.b_id) {
@@ -31,7 +37,7 @@ const useBoard = () => {
         (snapshot) => {
           setBoard(snapshot.docs.filter((s) => s.id === params.b_id)[0]);
           setBoardName(
-            snapshot.docs.filter((s) => s.id === params.b_id)[0].data().name
+            snapshot.docs.filter((s) => s.id === params.b_id)[0]?.data().name
           );
         }
       );
@@ -79,6 +85,14 @@ const useBoard = () => {
     }
   };
 
+  const handleDeleteBoard = async () => {
+    if (params.w_id && params.b_id) {
+      await deleteBoard(params.w_id, params.b_id);
+    }
+    navigate(ROUTES.BOARDS);
+    alert("Board deleted!");
+  };
+
   const submit = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     let order = lists.length + 1;
@@ -103,6 +117,7 @@ const useBoard = () => {
     setListName,
     toggleInput,
     submit,
+    handleDeleteBoard,
   };
 };
 
