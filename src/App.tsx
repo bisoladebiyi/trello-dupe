@@ -4,13 +4,14 @@ import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Auth from "./pages/Auth";
 import Board from "./pages/Board";
 import Boards from "./pages/Boards";
-// import { onAuthStateChanged } from "@firebase/auth";
-// import { auth } from "./firebase";
+import { onAuthStateChanged } from "@firebase/auth";
+import { auth } from "./firebase";
 import { ROUTES } from "./utils/constants/routes";
 import WorkspacesContext from "./context/WorkspacesContext";
 import Navbar from "./components/Navbar";
 import NewWorkspaceModal from "./components/NewWorkspaceModal";
 import NewBoardModal from "./components/NewBoardModal";
+import WorkspacePage from "./pages/WorkspacePage";
 
 const App = () => {
   const [showNewWorkspaceModal, setShowNewWorkspaceModal] =
@@ -23,21 +24,17 @@ const App = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // useEffect(() => {
-  //   const isAuthRoute = [ROUTES.LOGIN, ROUTES.SIGNUP].includes(
-  //     location.pathname
-  //   );
+  useEffect(() => {
+    const isAuthRoute = [ROUTES.LOGIN, ROUTES.SIGNUP].includes(
+      location.pathname
+    );
 
-  //   onAuthStateChanged(auth, (user) => {
-  //     if (user && isAuthRoute) {
-  //       navigate(ROUTES.BOARDS);
-  //     } else if (!user && isAuthRoute) {
-  //       return;
-  //     } else {
-  //       navigate(ROUTES.LOGIN);
-  //     }
-  //   });
-  // }, []);
+    onAuthStateChanged(auth, (user) => {
+      if(user && isAuthRoute) {
+        navigate(ROUTES.BOARDS);
+      }
+    });
+  }, [location]);
 
   useEffect(() => {
     if (location.pathname === "/") navigate(ROUTES.BOARDS);
@@ -67,10 +64,20 @@ const App = () => {
               <Boards
                 toggleBoardModal={toggleBoardModal}
                 setWorkspaceID={setWorkspaceID}
+                toggleWorkspaceModal={toggleWorkspaceModal}
               />
             }
           />
           <Route path={ROUTES.BOARD + "/:w_id/:b_id"} element={<Board />} />
+          <Route
+            path={ROUTES.BOARD + "/:w_id"}
+            element={
+              <WorkspacePage
+                toggleBoardModal={toggleBoardModal}
+                setWorkspaceID={setWorkspaceID}
+              />
+            }
+          />
         </Routes>
         {showNewWorkspaceModal && (
           <NewWorkspaceModal

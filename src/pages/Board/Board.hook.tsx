@@ -93,10 +93,11 @@ const useBoard = () => {
   };
 
   const handleDeleteBoard = async () => {
+    navigate(ROUTES.BOARDS);
+
     if (params.w_id && params.b_id) {
       await deleteBoard(params.w_id, params.b_id);
     }
-    navigate(ROUTES.BOARDS);
     alert("Board deleted!");
   };
 
@@ -140,7 +141,10 @@ const useBoard = () => {
 
     let order;
     if (dragOverItemIndex === 0) {
-      order = randomNumberFromInterval(0, lists[dragOverItemIndex].data().order);
+      order = randomNumberFromInterval(
+        0,
+        lists[dragOverItemIndex].data().order
+      );
     } else if (dragOverItemIndex === lists.length - 1) {
       order = randomNumberFromInterval(
         lists[dragOverItemIndex].data().order,

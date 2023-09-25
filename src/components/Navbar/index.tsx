@@ -3,11 +3,10 @@ import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import { Avatar } from "@mui/material";
 import { logOut } from "../../utils/requests/requests_firebase";
 import { INavbar } from "../../utils/interfaces/interfaces";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ROUTES } from "../../utils/constants/routes";
 import Button from "../Elements/Button";
-
-const navItems: string[] = ["Workspaces", "Recent", "Starred", "Templates"];
+import { navItems } from "../../utils/constants/constants";
 
 const Navbar: React.FC<INavbar> = ({
   toggleWorkspaceModal,
@@ -15,6 +14,7 @@ const Navbar: React.FC<INavbar> = ({
 }) => {
   const [showLogoutBtn, setShowLogoutBtn] = useState<boolean>(false);
   const [showCreateDropdown, setShowCreateDropdown] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const newWorkspace = () => {
     setShowCreateDropdown(false);
@@ -24,6 +24,11 @@ const Navbar: React.FC<INavbar> = ({
   const newBoard = () => {
     setShowCreateDropdown(false);
     toggleBoardModal();
+  };
+
+  const signOut = async () => {
+    await logOut();
+    navigate(ROUTES.LOGIN);
   };
 
   return (
@@ -96,7 +101,7 @@ const Navbar: React.FC<INavbar> = ({
         {showLogoutBtn && (
           <button
             className="bg-white p-3 rounded-sm text-center text-sm text-dark right-0 top-full absolute shadow"
-            onClick={logOut}
+            onClick={signOut}
           >
             Logout
           </button>

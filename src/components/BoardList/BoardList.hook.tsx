@@ -124,11 +124,9 @@ const useBoardList = (
     const _cards = [...cards];
     const dragItem = _cards.splice(dragItemIndex, 1)[0];
     _cards.splice(dragOverItemIndex, 0, dragItem);
-    console.log(_cards);
     setCards(_cards);
     setDragItemIndex(null);
     setDragOverItemIndex(null);
-    console.log(dragOverItemIndex, dragItem);
 
     let order;
     if (dragOverItemIndex === 0) {

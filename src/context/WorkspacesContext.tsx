@@ -7,10 +7,11 @@ import {
   DocumentData,
 } from "firebase/firestore";
 import { auth, db } from "../firebase";
+import { ILayout } from "../utils/interfaces/interfaces";
 
 export const WContext = createContext<QueryDocumentSnapshot<DocumentData, DocumentData>[] | []>([]);
 
-const WorkspacesContext = ({ children }: any) => {
+const WorkspacesContext:React.FC<ILayout> = ({ children }) => {
   const [workspaces, setworkspaces] = useState<QueryDocumentSnapshot<DocumentData, DocumentData>[] | []>([]);
 
   useEffect(() => {
