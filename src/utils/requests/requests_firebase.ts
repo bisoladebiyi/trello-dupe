@@ -82,6 +82,14 @@ export const addList = async (w_id: string, b_id:string, name:string, order:numb
     }
 };
 
+export const addCard = async (w_id: string, b_id:string, l_id: string, name:string, order:number,) => {
+    try {
+        await addDoc(collection(db, "workspaces", w_id, "boards", b_id, "lists", l_id, "cards"), { name, order })
+    } catch (error: any) {
+        alert(error.message)
+    }
+};
+
 //   export const leaveChannel =  (id) => {
 //     deleteDoc(doc(db, "channels", id)).then((res)=> window.location.reload());
 //   };

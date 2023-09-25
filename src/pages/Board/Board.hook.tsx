@@ -23,7 +23,6 @@ const useBoard = () => {
   const params = useParams();
 
   useEffect(() => {
-    console.log(params);
     if (params.w_id && params.b_id) {
       onSnapshot(
         query(collection(db, "workspaces", params.w_id, "boards")),
@@ -47,6 +46,7 @@ const useBoard = () => {
           setLists(snapshot.docs);
         }
       );
+
     }
   }, [params]);
 
@@ -64,6 +64,7 @@ const useBoard = () => {
       await addList(params.w_id, params.b_id, listName, order);
     }
   };
+
   return {
     showInput,
     listName,
