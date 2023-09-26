@@ -47,10 +47,10 @@ const Navbar: React.FC<INavbar> = ({
           </div>
         </Link>
 
-        <ul className="flex text-dark items-center space-x-6 ml-6 text-sm font-normal relative">
+        <ul className="flex text-dark items-center md:space-x-6 ml-6 text-sm font-normal relative">
           {navItems.map((item) => (
             <li key={item}>
-              <button className="flex items-center space-x-1">
+              <button className="hidden md:flex items-center space-x-1">
                 {item}
                 <ExpandMoreRoundedIcon />
               </button>
@@ -62,7 +62,7 @@ const Navbar: React.FC<INavbar> = ({
             className={"hover:bg-opacity-95"}
           />
           {showCreateDropdown && (
-            <div className="bg-white flex flex-col py-3 rounded-sm text-center text-sm text-dark right-0 top-full absolute shadow w-[250px]">
+            <div className="bg-white flex flex-col py-3 rounded-sm text-center text-sm text-dark -right-full md:right-0 top-full absolute shadow w-[250px]">
               <button
                 onClick={newBoard}
                 className="hover:bg-black hover:bg-opacity-10 px-5 py-2 text-left text-sm"

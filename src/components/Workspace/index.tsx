@@ -70,7 +70,7 @@ const Workspace: React.FC<IWorkspace> = ({
         </button>
       </div>
 
-      <div className="grid grid-cols-4 gap-3 mt-5">
+      <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 mt-5">
         {boards?.map((b) => (
           <Link to={ROUTES.BOARD + `/${workspace.id}/${b.id}`} key={b.id}>
             <button
