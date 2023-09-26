@@ -21,11 +21,11 @@ const NewWorkspaceModal: React.FC<INewWorkspaceModal> = ({
       <button className="absolute right-5 top-5" onClick={toggleWorkspaceModal}>
         <CloseRoundedIcon />
       </button>
-      <div className="px-28 py-20 w-1/2">
-        <h2 className="text-2xl font-bold text-dark mb-3">
+      <div className="px-10 sm:px-16 md:px-28 py-14 sm:py-20 lg:w-1/2">
+        <h2 className="text-xl sm:text-2xl font-bold text-dark mb-3">
           Let's build a Workspace
         </h2>
-        <p className="text-lg text-gray-600 mb-4 leading-tight">
+        <p className="text-sm sm:text-lg text-gray-600 mb-4 leading-tight">
           Boost your productivity by making it easier for everyone to access
           boards in one location.
         </p>
@@ -52,7 +52,7 @@ const NewWorkspaceModal: React.FC<INewWorkspaceModal> = ({
         </form>
       </div>
 
-      <div className="modal-art w-1/2 flex items-center justify-center">
+      <div className="modal-art w-1/2 hidden lg:flex items-center justify-center">
         <img src="https://trello.com/assets/d1f066971350650d3346.svg" alt="" />
       </div>
     </div>

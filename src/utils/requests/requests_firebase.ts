@@ -20,7 +20,7 @@ export const signUpWithEmail = async (email: string, password: string) => {
         localStorage.setItem("avatar", response.user.photoURL || "")
         return response.user
     } catch (error: any) {
-        return error.message;
+        alert(error.message);
     }
 }
 
@@ -30,7 +30,7 @@ export const signInWithEmail = async (email: string, password: string) => {
         localStorage.setItem("avatar", response.user.photoURL || "")
         return response.user
     } catch (error: any) {
-        return error.message;
+        alert(error.message);
     }
 }
 
@@ -42,7 +42,7 @@ export const signInGoogle = async () => {
         localStorage.setItem("avatar", response.user.photoURL || "")
         return response.user
     } catch (error: any) {
-        return error.message;
+        alert(error.message);
     }
 };
 
@@ -50,8 +50,9 @@ export const logOut = async () => {
     try {
         await signOut(auth)
         localStorage.removeItem("avatar")
+        sessionStorage.clear()
     } catch (error: any) {
-        return error.message;
+        alert(error.message);
     }
 };
 

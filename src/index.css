@@ -30,6 +30,12 @@ body,
   background-position: left bottom, right bottom;
 }
 
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
 .modal-container {
   box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.663);
   z-index: 9000;
@@ -79,5 +85,11 @@ body,
     height: 100%;
     display: grid;
     place-items: center;
+  }
+
+  .modal-container {
+    box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.663);
+    z-index: 9000;
+    height: auto;
   }
 }

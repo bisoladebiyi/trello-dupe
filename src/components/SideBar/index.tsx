@@ -9,7 +9,7 @@ import { ISideBar } from "../../utils/interfaces/interfaces";
 const SideBar: React.FC<ISideBar> = ({ active }) => {
   const workspaces = useContext(WContext);
   return (
-    <aside className="w-[350px]">
+    <aside className="w-[350px] hidden md:block">
       <ul className="space-y-1 border-b border-gray-300 pb-2 text-sm">
         {SideBarItems.map((s) => (
           <Link to={s.route} key={s.name}>
@@ -41,7 +41,7 @@ const SideBar: React.FC<ISideBar> = ({ active }) => {
           </button>
         </div>
         <ul className="space-y-1 text-sm">
-          {workspaces.map((w) => (
+          {workspaces?.map((w) => (
             <Link to={ROUTES.BOARD + `/${w.id}`} key={w.id}>
               <li
                 className={`capitalize rounded-md font-medium flex space-x-3 items-center p-2 cursor-pointer ${

@@ -20,20 +20,21 @@ const App = () => {
   const [showNewBoardModal, setShowNewBoardModal] = useState<boolean>(false);
   const [boardName, setBoardName] = useState<string>("");
   const [workspaceID, setWorkspaceID] = useState<string>("");
+  const [isAuthRoute, setIsAuthRoute] = useState(true);
 
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    const isAuthRoute = [ROUTES.LOGIN, ROUTES.SIGNUP].includes(
-      location.pathname
-    );
-
-    onAuthStateChanged(auth, (user) => {
-      if(user && isAuthRoute) {
-        navigate(ROUTES.BOARDS);
-      }
-    });
+    if (location.pathname) {
+      const isAuth = [ROUTES.LOGIN, ROUTES.SIGNUP].includes(location.pathname);
+      setIsAuthRoute(isAuth);
+      onAuthStateChanged(auth, (user) => {
+        if (user && isAuth) {
+          navigate(ROUTES.BOARDS);
+        }
+      });
+    }
   }, [location]);
 
   useEffect(() => {
@@ -51,10 +52,12 @@ const App = () => {
   return (
     <WorkspacesContext>
       <div className="App h-full">
-        <Navbar
-          toggleWorkspaceModal={toggleWorkspaceModal}
-          toggleBoardModal={toggleBoardModal}
-        />
+        {!isAuthRoute && (
+          <Navbar
+            toggleWorkspaceModal={toggleWorkspaceModal}
+            toggleBoardModal={toggleBoardModal}
+          />
+        )}
         <Routes>
           <Route path={ROUTES.SIGNUP} element={<Auth />} />
           <Route path={ROUTES.LOGIN} element={<Auth type={"login"} />} />
