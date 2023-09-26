@@ -12,6 +12,7 @@ import Navbar from "./components/Navbar";
 import NewWorkspaceModal from "./components/NewWorkspaceModal";
 import NewBoardModal from "./components/NewBoardModal";
 import WorkspacePage from "./pages/WorkspacePage";
+import BlankScreen from "./pages/BlankScreen";
 
 const App = () => {
   const [showNewWorkspaceModal, setShowNewWorkspaceModal] =
@@ -28,18 +29,24 @@ const App = () => {
   useEffect(() => {
     if (location.pathname) {
       const isAuth = [ROUTES.LOGIN, ROUTES.SIGNUP].includes(location.pathname);
-      setIsAuthRoute(isAuth);
+      const isHome = location.pathname === "/";
+
+      setIsAuthRoute(isAuth || isHome);
       onAuthStateChanged(auth, (user) => {
+        if (location.pathname === "/" && !user) {
+          navigate(ROUTES.LOGIN);
+        }
+
+        if (location.pathname === "/" && user) {
+          navigate(ROUTES.BOARDS);
+        }
+
         if (user && isAuth) {
           navigate(ROUTES.BOARDS);
         }
       });
     }
   }, [location]);
-
-  useEffect(() => {
-    if (location.pathname === "/") navigate(ROUTES.BOARDS);
-  }, []);
 
   const toggleBoardModal = () => {
     setShowNewBoardModal(!showNewBoardModal);
@@ -59,6 +66,7 @@ const App = () => {
           />
         )}
         <Routes>
+          <Route path={ROUTES.HOME} element={<BlankScreen />} />
           <Route path={ROUTES.SIGNUP} element={<Auth />} />
           <Route path={ROUTES.LOGIN} element={<Auth type={"login"} />} />
           <Route
