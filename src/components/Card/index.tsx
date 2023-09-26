@@ -52,7 +52,7 @@ const Card: React.FC<ICard> = ({ card, l_id }) => {
         <p>{cardName || card.data().name}</p>
       </div>
       {showUpdateCardModal && (
-        <div className="modal fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#F1F2F4] w-1/3 p-10 rounded-md">
+        <div className="modal fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#F1F2F4] w-10/12 md:w-1/3 p-10 rounded-md">
           <button
             className="absolute right-5 top-3"
             onClick={toggleUpdateModal}
